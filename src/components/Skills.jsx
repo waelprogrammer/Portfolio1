@@ -8,7 +8,6 @@ const skills = [
   { name: 'Photography', level: 85, category: 'Creative' },
   { name: 'WordPress', level: 20, category: 'Web' },
   { name: 'PHP', level: 80, category: 'Web' },
-  { name: 'Adobe Lightroom', level: 83, category: 'Creative' },
 ];
 
 const tools = [

@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Play, Sparkles } from 'lucide-react';
-import FloatingShapes from './FloatingShapes';
 import Avatar3D from './Avatar3D';
 import { personalInfo } from '../config/siteAssets';
 
@@ -29,8 +28,6 @@ export default function Hero() {
         paddingTop: '80px',
       }}
     >
-      {/* Animated Background */}
-      <FloatingShapes />
 
       {/* Deep gradient overlays */}
       <div style={{

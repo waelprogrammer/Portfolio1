@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
@@ -58,13 +58,6 @@ export default function Testimonials() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDirection(1);
-      setCurrent(c => (c + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
 
   const prev = () => {
     setDirection(-1);

@@ -22,11 +22,12 @@ import pp from './images/pp.png';
 //  PERSONAL INFO
 // ============================================================
 export const personalInfo = {
-  name:         'ٌRanim Toutanji',
+  name:         'Ranim Toutanji',
   firstName:    'Ranim',
   lastName:     'Toutanji',
   tagline:      'Creative Digital Marketer & Visual Storyteller',
   email:        'toutanjiranim@gmail.com',
+  instagram:    '@totonjiranim',
   instagramUrl: 'https://www.instagram.com/totonjiranim/',
   location:     'Tripoli, Lebanon',
   phone:        '+961 81331546',

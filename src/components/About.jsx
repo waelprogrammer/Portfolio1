@@ -79,7 +79,7 @@ export default function About() {
               )}
             </div>
 
-            {/* Floating experience card */}
+            {/* Floating experience card — outside overflow:hidden so it shows on top */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
@@ -91,6 +91,7 @@ export default function About() {
                 padding: '20px 24px',
                 borderRadius: '16px',
                 minWidth: '160px',
+                zIndex: 10,
               }}
             >
               <div style={{ fontSize: '2rem', fontWeight: '800', lineHeight: '1' }} className="text-gradient">3+</div>
@@ -107,6 +108,7 @@ export default function About() {
                 top: '30px',
                 right: '-32px',
                 padding: '16px 20px',
+                zIndex: 10,
                 borderRadius: '14px',
               }}
             >
