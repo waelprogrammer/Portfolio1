@@ -2,9 +2,8 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
 const skills = [
-  { name: 'Photoshop', level: 70, category: 'Design' },
+  { name: 'Photoshop', level: 50, category: 'Design' },
   { name: 'Premiere Pro', level: 88, category: 'Video' },
-  { name: 'After Effects', level: 78, category: 'Video' },
   { name: 'Social Media Marketing', level: 90, category: 'Marketing' },
   { name: 'Photography', level: 85, category: 'Creative' },
   { name: 'WordPress', level: 20, category: 'Web' },
@@ -15,8 +14,6 @@ const skills = [
 const tools = [
   { name: 'Photoshop', icon: '🎨' },
   { name: 'Premiere Pro', icon: '🎬' },
-  { name: 'After Effects', icon: '✨' },
-  { name: 'Lightroom', icon: '📷' },
   { name: 'WordPress', icon: '💻' },
   { name: 'Canva', icon: '🖼️' },
   { name: 'CapCut', icon: '📱' },
