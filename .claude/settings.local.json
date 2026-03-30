@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(npx create-react-app:*)",
+      "Bash(npm create:*)",
+      "Bash(npx create-vite@latest . --template react)",
+      "Bash(cp -r \"C:/Users/waelp/Desktop/ClaudeCode/portfolio2/.\" \"C:/Users/waelp/Desktop/ClaudeCode/portfolio\\(2\\)/\")",
+      "Bash(ls \"C:/Users/waelp/Desktop/ClaudeCode/portfolio\\(2\\)/\")",
+      "Bash(npm install:*)",
+      "Bash(ls \"C:/Users/waelp/Desktop/ClaudeCode/portfolio\\(2\\)/src/\")",
+      "Bash(npm run:*)",
+      "Bash(node -e \"const l = require\\(''lucide-react''\\); const keys = Object.keys\\(l\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\(''instagram''\\) || k.toLowerCase\\(\\).includes\\(''youtube''\\) || k.toLowerCase\\(\\).includes\\(''twitter''\\)\\)\\)\")",
+      "Bash(node -e \"const l = require\\(''lucide-react''\\); const keys = Object.keys\\(l\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\(''share''\\) || k.toLowerCase\\(\\).includes\\(''link''\\) || k.toLowerCase\\(\\).includes\\(''camera''\\) || k.toLowerCase\\(\\).includes\\(''at''\\)\\).slice\\(0,15\\)\\)\")",
+      "Bash(\"C:/Users/waelp/Desktop/ClaudeCode/portfolio\\(2\\)/src/config/images/README.txt\")",
+      "Bash(cat:*)"
+    ]
+  }
+}
