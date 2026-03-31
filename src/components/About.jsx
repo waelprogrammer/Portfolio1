@@ -3,19 +3,14 @@ import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Camera, Code2, Palette, TrendingUp, Video, University } from 'lucide-react';
 import { aboutImage } from '../config/siteAssets';
+import { useLanguage } from '../context/LanguageContext';
 
-const roles = [
-  { icon: Video, label: 'Video Editor', desc: 'Ads, Reels & Social Content' },
-  { icon: Palette, label: 'Photoshop Designer', desc: 'Branding & Visual Identity' },
-  { icon: TrendingUp, label: 'Digital Marketer', desc: 'Instagram & Social Growth' },
-  { icon: Camera, label: 'Photographer', desc: 'Events, Weddings & Parties' },
-  { icon: Code2, label: 'WordPress Developer', desc: 'Modern Web Experiences' },
-  { icon: University, label: 'CS Student', desc: 'Lebanese University' },
-];
+const roleIcons = [Video, Palette, TrendingUp, Camera, Code2, University];
 
 export default function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { t } = useLanguage();
 
   return (
     <section id="about" ref={ref} style={{ padding: '120px 0', position: 'relative' }}>
@@ -95,7 +90,7 @@ export default function About() {
               }}
             >
               <div style={{ fontSize: '2rem', fontWeight: '800', lineHeight: '1' }} className="text-gradient">3+</div>
-              <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginTop: '4px' }}>Years of Creative Experience</div>
+              <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginTop: '4px' }}>{t.about.years}</div>
             </motion.div>
 
             {/* Floating projects card */}
@@ -113,7 +108,7 @@ export default function About() {
               }}
             >
               <div style={{ fontSize: '1.5rem', fontWeight: '700', lineHeight: '1' }} className="text-gradient">50+</div>
-              <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>Projects</div>
+              <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>{t.about.projects}</div>
             </motion.div>
           </motion.div>
 
@@ -130,34 +125,31 @@ export default function About() {
                 fontSize: '0.75rem', letterSpacing: '3px', textTransform: 'uppercase',
                 color: '#ff6ec7', fontWeight: '600',
               }}>
-                About Me
+                {t.about.label}
               </span>
               <div className="section-divider" style={{ marginTop: '12px' }} />
             </div>
 
             <h2 className="section-title" style={{ margin: 0 }}>
-              <span className="text-gradient-white">Turning Vision</span>
+              <span className="text-gradient-white">{t.about.title1}</span>
               <br />
-              <span className="text-gradient">Into Reality</span>
+              <span className="text-gradient">{t.about.title2}</span>
             </h2>
 
             <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: '1.85', fontSize: '1rem' }}>
-              I'm a multi-disciplinary creative based in Lebanon — merging technical skill with artistic
-              vision to craft compelling digital experiences. From cinematic videos to stunning visuals
-              and smart marketing strategies, I bring brands to life.
+              {t.about.p1}
             </p>
 
             <p style={{ color: 'rgba(255,255,255,0.5)', lineHeight: '1.85', fontSize: '0.95rem' }}>
-              Currently pursuing a Computer Science degree at the Lebanese University while building
-              real-world impact through design, photography, and digital storytelling.
+              {t.about.p2}
             </p>
 
             {/* Role Cards */}
             <div style={{
               display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px',
             }}>
-              {roles.map((role, i) => {
-                const Icon = role.icon;
+              {t.about.roles.map((role, i) => {
+                const Icon = roleIcons[i];
                 return (
                   <motion.div
                     key={role.label}

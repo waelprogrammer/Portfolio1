@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Play, Sparkles } from 'lucide-react';
 import Avatar3D from './Avatar3D';
 import { personalInfo } from '../config/siteAssets';
+import { useLanguage } from '../context/LanguageContext';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -12,6 +13,7 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const { t } = useLanguage();
   const scrollTo = (id) => {
     document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -82,7 +84,7 @@ export default function Hero() {
               backdropFilter: 'blur(10px)',
             }}>
               <Sparkles size={13} />
-              Available for freelance projects
+              {t.hero.badge}
               <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 8px #4ade80' }} />
             </div>
           </motion.div>
@@ -97,7 +99,7 @@ export default function Hero() {
               color: 'rgba(255,110,199,0.7)',
               marginBottom: '12px',
             }}>
-              Visual Creator & Digital Artist
+              {t.hero.label}
             </div>
             <h1 style={{
               fontFamily: 'Playfair Display, serif',
@@ -128,8 +130,8 @@ export default function Hero() {
               lineHeight: '1.6',
               fontFamily: 'Space Grotesk',
             }}>
-              {personalInfo.tagline.split('&')[0].trim()} &{' '}
-              <span style={{ color: '#ff6ec7', fontWeight: '600' }}>{personalInfo.tagline.split('&')[1]?.trim()}</span>
+              {t.hero.taglinePart1}{' '}
+              <span style={{ color: '#ff6ec7', fontWeight: '600' }}>{t.hero.taglinePart2}</span>
             </p>
           </motion.div>
 
@@ -170,7 +172,7 @@ export default function Hero() {
               className="btn-primary"
               onClick={() => scrollTo('#portfolio')}
             >
-              View My Work
+              {t.hero.viewWork}
               <ArrowRight size={16} />
             </motion.button>
             <motion.button
@@ -180,7 +182,7 @@ export default function Hero() {
               onClick={() => scrollTo('#contact')}
             >
               <Play size={14} fill="currentColor" />
-              Contact Me
+              {t.hero.contactMe}
             </motion.button>
           </motion.div>
 
@@ -193,9 +195,9 @@ export default function Hero() {
             style={{ display: 'flex', gap: '36px', paddingTop: '8px' }}
           >
             {[
-              { num: '50+', label: 'Projects Done' },
-              { num: '30+', label: 'Happy Clients' },
-              { num: '3+', label: 'Years Exp.' },
+              { num: '50+', label: t.hero.stat1 },
+              { num: '30+', label: t.hero.stat2 },
+              { num: '3+',  label: t.hero.stat3 },
             ].map((stat) => (
               <div key={stat.label}>
                 <div style={{

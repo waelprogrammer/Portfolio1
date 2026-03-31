@@ -1,27 +1,29 @@
 import { motion } from 'framer-motion';
 import { AtSign, Video, Mail, ArrowUp, Heart } from 'lucide-react';
 import { personalInfo } from '../config/siteAssets';
-
-const socials = [
-  { icon: AtSign, label: 'Instagram', href: personalInfo.instagramUrl, color: '#e91e8c' },
-  { icon: Video, label: 'YouTube', href: personalInfo.youtubeUrl, color: '#ff6ec7' },
-  { icon: Mail, label: 'Email', href: `mailto:${personalInfo.email}`, color: '#ffb6c1' },
-];
-
-const links = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Portfolio', href: '#portfolio' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Contact', href: '#contact' },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   const handleNav = (e, href) => {
     e.preventDefault();
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const socials = [
+    { icon: AtSign, label: 'Instagram', href: personalInfo.instagramUrl, color: '#e91e8c' },
+    { icon: Video, label: 'YouTube', href: personalInfo.youtubeUrl, color: '#ff6ec7' },
+    { icon: Mail, label: 'Email', href: `mailto:${personalInfo.email}`, color: '#ffb6c1' },
+  ];
+
+  const navLinks = [
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.services, href: '#services' },
+    { label: t.nav.work, href: '#portfolio' },
+    { label: t.nav.skills, href: '#skills' },
+    { label: t.nav.contact, href: '#contact' },
+  ];
 
   return (
     <footer style={{
@@ -62,7 +64,7 @@ export default function Footer() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '18px', fontWeight: '700', color: 'white',
                 boxShadow: '0 0 20px rgba(255,110,199,0.4)',
-              }}>L</div>
+              }}>{personalInfo.firstName[0]}</div>
               <span style={{ fontFamily: 'Space Grotesk', fontWeight: '700', fontSize: '1.15rem' }}>
                 <span style={{ color: 'white' }}>{personalInfo.firstName}</span>
                 <span style={{
@@ -72,7 +74,7 @@ export default function Footer() {
               </span>
             </div>
             <p style={{ color: 'rgba(255,255,255,0.4)', lineHeight: '1.8', fontSize: '0.88rem', maxWidth: '300px' }}>
-              Creative Digital Marketer & Visual Storyteller. Crafting compelling stories through video, photography, and design.
+              {t.footer.desc}
             </p>
 
             {/* Social Icons */}
@@ -114,12 +116,12 @@ export default function Footer() {
           {/* Navigation */}
           <div>
             <h4 style={{ fontWeight: '600', fontSize: '0.85rem', letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: '20px' }}>
-              Navigation
+              {t.footer.nav}
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {links.map(link => (
+              {navLinks.map(link => (
                 <a
-                  key={link.label}
+                  key={link.href}
                   href={link.href}
                   onClick={e => handleNav(e, link.href)}
                   className="nav-link"
@@ -134,10 +136,10 @@ export default function Footer() {
           {/* Services */}
           <div>
             <h4 style={{ fontWeight: '600', fontSize: '0.85rem', letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: '20px' }}>
-              Services
+              {t.footer.services}
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {['Video Editing', 'Graphic Design', 'Photography', 'Digital Marketing', 'WordPress Dev', 'Live Coverage'].map(s => (
+              {t.footer.serviceList.map(s => (
                 <span key={s} style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.4)', cursor: 'default' }}>
                   {s}
                 </span>
@@ -154,7 +156,7 @@ export default function Footer() {
           flexWrap: 'wrap', gap: '12px',
         }}>
           <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.3)' }}>
-            © 2024 Ranim Toutanji. Made with{' '}
+            {t.footer.copy}{' '}
             <Heart size={12} style={{ display: 'inline', color: '#ff6ec7', verticalAlign: 'middle' }} />
             {' '}in Lebanon.
           </p>

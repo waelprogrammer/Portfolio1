@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const testimonials = [
   {
@@ -57,7 +58,7 @@ export default function Testimonials() {
   const [direction, setDirection] = useState(1);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
-
+  const { t: tr } = useLanguage();
 
   const prev = () => {
     setDirection(-1);
@@ -68,7 +69,7 @@ export default function Testimonials() {
     setCurrent(c => (c + 1) % testimonials.length);
   };
 
-  const t = testimonials[current];
+  const item = testimonials[current];
 
   return (
     <section id="testimonials" ref={ref} style={{ padding: '120px 0', position: 'relative', overflow: 'hidden' }}>
@@ -87,12 +88,12 @@ export default function Testimonials() {
           style={{ textAlign: 'center', marginBottom: '72px' }}
         >
           <span style={{ fontSize: '0.75rem', letterSpacing: '3px', textTransform: 'uppercase', color: '#ff6ec7', fontWeight: '600' }}>
-            Testimonials
+            {tr.testimonials.label}
           </span>
           <div className="section-divider" style={{ margin: '12px auto 0' }} />
           <h2 className="section-title" style={{ marginTop: '20px' }}>
-            <span className="text-gradient-white">What Clients</span>{' '}
-            <span className="text-gradient">Say</span>
+            <span className="text-gradient-white">{tr.testimonials.title1}</span>{' '}
+            <span className="text-gradient">{tr.testimonials.title2}</span>
           </h2>
         </motion.div>
 
@@ -132,7 +133,7 @@ export default function Testimonials() {
 
                 {/* Stars */}
                 <div style={{ display: 'flex', gap: '4px', marginBottom: '20px', marginTop: '8px' }}>
-                  {[...Array(t.stars)].map((_, i) => (
+                  {[...Array(item.stars)].map((_, i) => (
                     <motion.span
                       key={i}
                       initial={{ opacity: 0, scale: 0 }}
@@ -148,7 +149,7 @@ export default function Testimonials() {
                   color: 'rgba(255,255,255,0.8)', fontStyle: 'italic',
                   marginBottom: '32px', fontFamily: 'Playfair Display',
                 }}>
-                  "{t.text}"
+                  "{item.text}"
                 </p>
 
                 {/* Author */}
@@ -161,12 +162,12 @@ export default function Testimonials() {
                     flexShrink: 0,
                     boxShadow: `0 4px 16px ${colors[current % colors.length]}60`,
                   }}>
-                    {t.initial}
+                    {item.initial}
                   </div>
                   <div>
-                    <div style={{ fontWeight: '700', fontSize: '0.95rem' }}>{t.name}</div>
-                    <div style={{ fontSize: '0.8rem', color: '#ff6ec7' }}>{t.role}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>{t.company}</div>
+                    <div style={{ fontWeight: '700', fontSize: '0.95rem' }}>{item.name}</div>
+                    <div style={{ fontSize: '0.8rem', color: '#ff6ec7' }}>{item.role}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>{item.company}</div>
                   </div>
                 </div>
               </motion.div>

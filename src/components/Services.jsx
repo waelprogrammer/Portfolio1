@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const services = [
   {
@@ -150,6 +151,7 @@ function ServiceCard({ service, index, isInView }) {
 export default function Services() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const { t } = useLanguage();
 
   return (
     <section id="services" ref={ref} style={{ padding: '120px 0', position: 'relative' }} className="grid-bg">
@@ -172,18 +174,18 @@ export default function Services() {
             fontSize: '0.75rem', letterSpacing: '3px', textTransform: 'uppercase',
             color: '#ff6ec7', fontWeight: '600',
           }}>
-            What I Do
+            {t.services.label}
           </span>
           <div className="section-divider" style={{ margin: '12px auto 0' }} />
           <h2 className="section-title" style={{ marginTop: '20px' }}>
-            <span className="text-gradient-white">Services</span>{' '}
-            <span className="text-gradient">& Expertise</span>
+            <span className="text-gradient-white">{t.services.title1}</span>{' '}
+            <span className="text-gradient">{t.services.title2}</span>
           </h2>
           <p style={{
             maxWidth: '520px', margin: '16px auto 0',
             color: 'rgba(255,255,255,0.5)', lineHeight: '1.8', fontSize: '1rem',
           }}>
-            Full-spectrum creative services — from concept to final delivery, crafted with passion and precision.
+            {t.services.subtitle}
           </p>
         </motion.div>
 

@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const skills = [
   { name: 'Photoshop', level: 50, category: 'Design' },
@@ -58,6 +59,7 @@ function SkillBar({ skill, isInView, index }) {
 export default function Skills() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const { t } = useLanguage();
 
   return (
     <section id="skills" ref={ref} style={{ padding: '120px 0', position: 'relative' }} className="grid-bg">
@@ -76,12 +78,12 @@ export default function Skills() {
           style={{ textAlign: 'center', marginBottom: '72px' }}
         >
           <span style={{ fontSize: '0.75rem', letterSpacing: '3px', textTransform: 'uppercase', color: '#ff6ec7', fontWeight: '600' }}>
-            Expertise
+            {t.skills.label}
           </span>
           <div className="section-divider" style={{ margin: '12px auto 0' }} />
           <h2 className="section-title" style={{ marginTop: '20px' }}>
-            <span className="text-gradient-white">Skills &</span>{' '}
-            <span className="text-gradient">Tools</span>
+            <span className="text-gradient-white">{t.skills.title1}</span>{' '}
+            <span className="text-gradient">{t.skills.title2}</span>
           </h2>
         </motion.div>
 
@@ -93,7 +95,7 @@ export default function Skills() {
               animate={isInView ? { opacity: 1 } : {}}
               style={{ fontFamily: 'Playfair Display', fontSize: '1.5rem', marginBottom: '8px' }}
             >
-              Proficiency Levels
+              {t.skills.proficiency}
             </motion.h3>
             {skills.map((skill, i) => (
               <SkillBar key={skill.name} skill={skill} isInView={isInView} index={i} />
@@ -108,7 +110,7 @@ export default function Skills() {
               animate={isInView ? { opacity: 1 } : {}}
               style={{ fontFamily: 'Playfair Display', fontSize: '1.5rem', marginBottom: '32px' }}
             >
-              Core Strengths
+              {t.skills.strengths}
             </motion.h3>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '48px' }}>
@@ -133,7 +135,7 @@ export default function Skills() {
                     whileHover={{ scale: 1.05 }}
                   >
                     <svg width="90" height="90" viewBox="0 0 90 90">
-                      <circle cx="45" cy="45" r="40" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="6" />
+                      <circle cx="45" cy="45" r="40" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="6" className="skill-track" />
                       <motion.circle
                         cx="45" cy="45" r="40"
                         fill="none"
@@ -147,7 +149,7 @@ export default function Skills() {
                         transform="rotate(-90 45 45)"
                         style={{ filter: `drop-shadow(0 0 6px ${item.color})` }}
                       />
-                      <text x="45" y="50" textAnchor="middle" fill="white" fontSize="15" fontWeight="700">
+                      <text x="45" y="50" textAnchor="middle" fill="white" fontSize="15" fontWeight="700" className="skill-pct">
                         {item.value}%
                       </text>
                     </svg>
@@ -165,7 +167,7 @@ export default function Skills() {
               animate={isInView ? { opacity: 1 } : {}}
               style={{ fontFamily: 'Playfair Display', fontSize: '1.5rem', marginBottom: '24px' }}
             >
-              Tools I Use
+              {t.skills.tools}
             </motion.h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
               {tools.map((tool, i) => (

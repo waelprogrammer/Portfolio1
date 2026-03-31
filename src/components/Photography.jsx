@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Camera, Heart, Zap } from 'lucide-react';
 import { photographyImages } from '../config/siteAssets';
+import { useLanguage } from '../context/LanguageContext';
 
 // Grid span config — first and last photos are wider
 const spanConfig = ['span 2', 'span 1', 'span 1', 'span 1', 'span 2'];
@@ -9,6 +10,7 @@ const spanConfig = ['span 2', 'span 1', 'span 1', 'span 1', 'span 2'];
 export default function Photography() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const { t } = useLanguage();
 
   return (
     <section ref={ref} style={{ padding: '120px 0', position: 'relative', overflow: 'hidden' }}>
@@ -35,28 +37,27 @@ export default function Photography() {
             transition={{ duration: 0.8 }}
           >
             <span style={{ fontSize: '0.75rem', letterSpacing: '3px', textTransform: 'uppercase', color: '#ff6ec7', fontWeight: '600' }}>
-              Photography
+              {t.photography.label}
             </span>
             <div className="section-divider" style={{ marginTop: '12px' }} />
 
             <h2 className="section-title" style={{ marginTop: '20px' }}>
-              <span className="text-gradient-white">Capturing</span>
+              <span className="text-gradient-white">{t.photography.title1}</span>
               <br />
-              <span className="text-gradient">Raw Moments</span>
+              <span className="text-gradient">{t.photography.title2}</span>
             </h2>
 
             <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: '1.85', fontSize: '0.98rem', marginTop: '24px' }}>
-              Every frame tells a story. From the quiet emotion of a first dance to the electric energy
-              of a celebration — I photograph the moments that matter most.
+              {t.photography.desc}
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '32px' }}>
               {[
-                { icon: Heart, label: 'Weddings & Engagements', color: '#ff6ec7' },
-                { icon: Zap, label: 'Events & Corporate', color: '#e91e8c' },
-                { icon: Camera, label: 'Parties & Celebrations', color: '#ffb6c1' },
-              ].map(({ icon: Icon, label, color }) => (
-                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                { icon: Heart, color: '#ff6ec7' },
+                { icon: Zap, color: '#e91e8c' },
+                { icon: Camera, color: '#ffb6c1' },
+              ].map(({ icon: Icon, color }, idx) => (
+                <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                   <div style={{
                     width: '40px', height: '40px',
                     background: `rgba(${color === '#ff6ec7' ? '255,110,199' : color === '#e91e8c' ? '233,30,140' : '255,182,193'}, 0.12)`,
@@ -66,7 +67,7 @@ export default function Photography() {
                   }}>
                     <Icon size={18} color={color} />
                   </div>
-                  <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>{label}</span>
+                  <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>{t.photography.types[idx]}</span>
                 </div>
               ))}
             </div>

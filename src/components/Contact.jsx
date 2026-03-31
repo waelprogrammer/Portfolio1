@@ -2,10 +2,12 @@ import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Send, Mail, AtSign, MapPin, Phone } from 'lucide-react';
 import { personalInfo } from '../config/siteAssets';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const { t } = useLanguage();
   const [focused, setFocused] = useState({});
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [sent, setSent] = useState(false);
@@ -62,15 +64,15 @@ export default function Contact() {
           style={{ textAlign: 'center', marginBottom: '72px' }}
         >
           <span style={{ fontSize: '0.75rem', letterSpacing: '3px', textTransform: 'uppercase', color: '#ff6ec7', fontWeight: '600' }}>
-            Contact
+            {t.contact.label}
           </span>
           <div className="section-divider" style={{ margin: '12px auto 0' }} />
           <h2 className="section-title" style={{ marginTop: '20px' }}>
-            <span className="text-gradient-white">Let's Work</span>{' '}
-            <span className="text-gradient">Together</span>
+            <span className="text-gradient-white">{t.contact.title1}</span>{' '}
+            <span className="text-gradient">{t.contact.title2}</span>
           </h2>
           <p style={{ maxWidth: '480px', margin: '16px auto 0', color: 'rgba(255,255,255,0.5)', lineHeight: '1.8' }}>
-            Have a project in mind? Let's create something extraordinary together.
+            {t.contact.subtitle}
           </p>
         </motion.div>
 
@@ -84,20 +86,20 @@ export default function Contact() {
           >
             <div>
               <h3 style={{ fontFamily: 'Playfair Display', fontSize: '1.6rem', marginBottom: '16px' }}>
-                Ready to Start a Project?
+                {t.contact.ready}
               </h3>
               <p style={{ color: 'rgba(255,255,255,0.55)', lineHeight: '1.8' }}>
-                Whether it's a video campaign, a photoshoot, social media management, or a new website — I'm here to bring your vision to life.
+                {t.contact.readyDesc}
               </p>
             </div>
 
             {/* Contact Details */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {[
-                { icon: Mail, label: 'Email', value: personalInfo.email, color: '#ff6ec7' },
-                { icon: AtSign, label: 'Instagram', value: personalInfo.instagram, color: '#e91e8c' },
-                { icon: MapPin, label: 'Location', value: personalInfo.location, color: '#ffb6c1' },
-                { icon: Phone, label: 'Phone', value: personalInfo.phone, color: '#ff6ec7' },
+                { icon: Mail, label: t.contact.labels.email, value: personalInfo.email, color: '#ff6ec7' },
+                { icon: AtSign, label: t.contact.labels.instagram, value: personalInfo.instagram, color: '#e91e8c' },
+                { icon: MapPin, label: t.contact.labels.location, value: personalInfo.location, color: '#ffb6c1' },
+                { icon: Phone, label: t.contact.labels.phone, value: personalInfo.phone, color: '#ff6ec7' },
               ].map(({ icon: Icon, label, value, color }) => (
                 <motion.div
                   key={label}
@@ -131,7 +133,7 @@ export default function Contact() {
             >
               <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 10px #4ade80' }} />
               <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
-                Currently available for new projects
+                {t.contact.available}
               </span>
             </motion.div>
           </motion.div>
@@ -148,7 +150,7 @@ export default function Contact() {
                 {['name', 'email'].map(field => (
                   <div key={field} style={{ position: 'relative' }}>
                     <label style={labelStyle(field)}>
-                      {field.charAt(0).toUpperCase() + field.slice(1)}
+                      {t.contact[field]}
                     </label>
                     <input
                       type={field === 'email' ? 'email' : 'text'}
@@ -165,7 +167,7 @@ export default function Contact() {
 
               {/* Subject */}
               <div style={{ position: 'relative' }}>
-                <label style={labelStyle('subject')}>Subject</label>
+                <label style={labelStyle('subject')}>{t.contact.subject}</label>
                 <input
                   type="text"
                   style={inputStyle('subject')}
@@ -179,7 +181,7 @@ export default function Contact() {
               {/* Message */}
               <div style={{ position: 'relative' }}>
                 <label style={{ ...labelStyle('message'), top: formData.message || focused.message ? '10px' : '20px', transform: 'none' }}>
-                  Message
+                  {t.contact.message}
                 </label>
                 <textarea
                   rows={6}
@@ -199,7 +201,7 @@ export default function Contact() {
                 className="btn-primary"
                 style={{ padding: '16px 32px', fontSize: '1rem', justifyContent: 'center' }}
               >
-                {sent ? '✓ Message Sent!' : <>Send Message <Send size={16} /></>}
+                {sent ? t.contact.sent : <>{t.contact.send} <Send size={16} /></>}
               </motion.button>
             </form>
           </motion.div>

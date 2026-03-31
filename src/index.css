@@ -1,11 +1,39 @@
 @import "tailwindcss";
 
+/* ── DARK MODE (default) ── */
 :root {
   --pink-primary: #ff6ec7;
   --pink-light: #ffb6c1;
-  --pink-soft: #ffc0cb;
   --pink-deep: #e91e8c;
-  --pink-glow: rgba(255, 110, 199, 0.4);
+
+  --bg:              #050508;
+  --bg-alt:          #08050f;
+  --text-primary:    #ffffff;
+  --text-secondary:  rgba(255,255,255,0.65);
+  --text-muted:      rgba(255,255,255,0.4);
+  --glass-bg:        rgba(255,255,255,0.04);
+  --glass-border:    rgba(255,110,199,0.15);
+  --glass-dark-bg:   rgba(5,5,10,0.7);
+  --glass-dark-border: rgba(255,110,199,0.2);
+  --grid-color:      rgba(255,110,199,0.04);
+  --scrollbar-track: #0a0a0f;
+  --placeholder-bg:  rgba(255,110,199,0.08);
+}
+
+/* ── LIGHT MODE ── */
+html[data-theme="light"] {
+  --bg:              #fdf2f8;
+  --bg-alt:          #f9e5f4;
+  --text-primary:    #1a0015;
+  --text-secondary:  rgba(26,0,21,0.72);
+  --text-muted:      rgba(26,0,21,0.45);
+  --glass-bg:        rgba(255,255,255,0.82);
+  --glass-border:    rgba(255,110,199,0.35);
+  --glass-dark-bg:   rgba(255,245,252,0.92);
+  --glass-dark-border: rgba(255,110,199,0.3);
+  --grid-color:      rgba(255,110,199,0.09);
+  --scrollbar-track: #f9e5f4;
+  --placeholder-bg:  rgba(255,110,199,0.12);
 }
 
 * {
@@ -19,15 +47,16 @@ html {
 }
 
 body {
-  background: #050508;
-  color: #fff;
+  background: var(--bg);
+  color: var(--text-primary);
   font-family: 'Space Grotesk', sans-serif;
   overflow-x: hidden;
   cursor: none;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0a0a0f; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #ff6ec7, #e91e8c);
   border-radius: 3px;
@@ -65,18 +94,20 @@ body {
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 110, 199, 0.15);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
+  transition: background 0.4s ease, border-color 0.4s ease;
 }
 
 .glass-dark {
-  background: rgba(5, 5, 10, 0.7);
+  background: var(--glass-dark-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 110, 199, 0.2);
+  border: 1px solid var(--glass-dark-border);
+  transition: background 0.4s ease, border-color 0.4s ease;
 }
 
 .glow-pink {
@@ -136,8 +167,8 @@ body {
 
 .grid-bg {
   background-image:
-    linear-gradient(rgba(255,110,199,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,110,199,0.04) 1px, transparent 1px);
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
   background-size: 80px 80px;
 }
 
@@ -279,10 +310,14 @@ body {
 .portfolio-item:hover .thumb-inner { transform: scale(1.08); }
 
 .skill-bar-track {
-  background: rgba(255,255,255,0.07);
+  background: rgba(128,0,64,0.12);
   border-radius: 100px;
   overflow: hidden;
   height: 6px;
+}
+
+html[data-theme="light"] .skill-bar-track {
+  background: rgba(255,110,199,0.15);
 }
 
 .skill-bar-fill {
@@ -290,4 +325,172 @@ body {
   border-radius: 100px;
   background: linear-gradient(90deg, #ff6ec7, #e91e8c);
   box-shadow: 0 0 12px rgba(255,110,199,0.6);
+}
+
+/* ============================================================
+   LIGHT MODE — GLOBAL text override (reliable, selector-independent)
+   ============================================================ */
+
+/* Force ALL text in main dark — catches every inline white/rgba color */
+html[data-theme="light"] main * {
+  color: var(--text-secondary) !important;
+}
+
+/* Gradient text: -webkit-text-fill-color:transparent already set by class,
+   which takes precedence over color in WebKit/Chrome — gradient shows through */
+html[data-theme="light"] .text-gradient-white {
+  background: linear-gradient(135deg, #2d0022 0%, #e91e8c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text;
+}
+
+/* Headings: slightly darker */
+html[data-theme="light"] main h1,
+html[data-theme="light"] main h2,
+html[data-theme="light"] main h3,
+html[data-theme="light"] main h4 {
+  color: var(--text-primary) !important;
+}
+
+/* btn-primary: white text on gradient bg */
+html[data-theme="light"] .btn-primary,
+html[data-theme="light"] .btn-primary * {
+  color: white !important;
+}
+
+/* btn-outline */
+html[data-theme="light"] .btn-outline {
+  border-color: rgba(233,30,140,0.5) !important;
+  color: #e91e8c !important;
+}
+html[data-theme="light"] .btn-outline:hover {
+  background: rgba(233,30,140,0.1) !important;
+}
+
+/* Pink/accent inline colors → solid visible versions */
+html[data-theme="light"] [style*="#ff6ec7"] { color: #c9177a !important; }
+html[data-theme="light"] [style*="#ffb6c1"] { color: #c9177a !important; }
+html[data-theme="light"] [style*="#e91e8c"] { color: #8b0f56 !important; }
+html[data-theme="light"] [style*="#c084fc"] { color: #7c3aed !important; }
+html[data-theme="light"] [style*="#fbbf24"] { color: #92400e !important; }
+html[data-theme="light"] [style*="#f472b6"] { color: #c9177a !important; }
+html[data-theme="light"] [style*="#4ade80"] { color: #15803d !important; }
+
+/* SVG fill attributes (skill % labels, any fill="white") */
+html[data-theme="light"] [fill="white"],
+html[data-theme="light"] [fill="#fff"],
+html[data-theme="light"] [fill="#ffffff"] {
+  fill: var(--text-primary) !important;
+}
+
+/* Nav links */
+html[data-theme="light"] .nav-link {
+  color: rgba(26,0,21,0.65) !important;
+}
+html[data-theme="light"] .nav-link:hover {
+  color: #c9177a !important;
+}
+
+/* Footer */
+html[data-theme="light"] footer {
+  background: #f5dff0;
+  border-top-color: rgba(255,110,199,0.2);
+}
+html[data-theme="light"] footer * {
+  color: rgba(26,0,21,0.6) !important;
+}
+html[data-theme="light"] footer .text-gradient,
+html[data-theme="light"] footer .text-gradient * {
+  -webkit-text-fill-color: transparent !important;
+}
+html[data-theme="light"] footer [style*="#ff6ec7"],
+html[data-theme="light"] footer [style*="#ffb6c1"] {
+  color: #c9177a !important;
+}
+
+/* Sections */
+html[data-theme="light"] section { background: transparent; }
+html[data-theme="light"] .placeholder-box { background: var(--placeholder-bg); }
+
+/* ============================================================
+   LIGHT MODE — background & structural fixes
+   ============================================================ */
+
+/* Navbar scrolled dark bg → light */
+html[data-theme="light"] nav {
+  background: transparent !important;
+}
+html[data-theme="light"] nav.scrolled,
+html[data-theme="light"] nav[style] {
+  background: rgba(253,242,248,0.92) !important;
+  border-bottom-color: rgba(255,110,199,0.15) !important;
+}
+
+/* Mobile menu */
+html[data-theme="light"] nav > div + div {
+  background: rgba(253,242,248,0.98) !important;
+}
+
+/* SVG skill chart track ring */
+html[data-theme="light"] .skill-track {
+  stroke: rgba(26,0,21,0.1) !important;
+}
+html[data-theme="light"] .skill-pct {
+  fill: var(--text-primary) !important;
+}
+
+/* Form inputs */
+html[data-theme="light"] input,
+html[data-theme="light"] textarea {
+  color: var(--text-primary) !important;
+  background-color: rgba(26,0,21,0.04) !important;
+  border-color: rgba(26,0,21,0.18) !important;
+}
+html[data-theme="light"] input:focus,
+html[data-theme="light"] textarea:focus {
+  border-color: #e91e8c !important;
+  box-shadow: 0 0 0 3px rgba(233,30,140,0.1) !important;
+}
+
+/* Control buttons: make borders visible */
+html[data-theme="light"] button:not(.btn-primary):not(.btn-outline) {
+  background-color: rgba(26,0,21,0.05) !important;
+  border-color: rgba(26,0,21,0.14) !important;
+}
+
+/* Restore pink-bordered nav buttons */
+html[data-theme="light"] nav button[style*="#ff6ec7"],
+html[data-theme="light"] nav button[style*="rgba(255,110,199"] {
+  background-color: rgba(233,30,140,0.08) !important;
+  border-color: rgba(233,30,140,0.3) !important;
+}
+
+/* Service/About dark icon box backgrounds (rgba near-black gradient end) */
+html[data-theme="light"] .service-card [style*="background"],
+html[data-theme="light"] .glass [style*="rgba(5,5,8"],
+html[data-theme="light"] [style*="rgba(5, 5, 8"] {
+  background: rgba(255,110,199,0.12) !important;
+}
+
+/* ── RTL / Arabic support ── */
+[dir="rtl"] body,
+[dir="rtl"] * {
+  font-family: 'Tajawal', 'Space Grotesk', sans-serif;
+}
+[dir="rtl"] .section-divider {
+  margin-right: 0;
+  margin-left: auto;
+}
+[dir="rtl"] .nav-link::after {
+  left: auto;
+  right: 0;
+}
+[dir="rtl"] .btn-primary,
+[dir="rtl"] .btn-outline {
+  font-family: 'Tajawal', sans-serif;
+  letter-spacing: 0;
+}
+[dir="rtl"] .skill-bar-fill {
+  background: linear-gradient(270deg, #ff6ec7, #e91e8c);
 }

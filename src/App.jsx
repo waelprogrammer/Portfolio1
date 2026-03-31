@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LanguageProvider } from './context/LanguageContext';
 import { motion } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 import CustomCursor from './components/CustomCursor';
@@ -79,15 +80,17 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
-    document.body.style.background = darkMode ? '#050508' : '#080010';
+    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
 
   return (
     <BrowserRouter>
+      <LanguageProvider>
       <Routes>
         <Route path="/" element={<HomePage darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/projects" element={<ProjectsRoute />} />
       </Routes>
+      </LanguageProvider>
     </BrowserRouter>
   );
 }

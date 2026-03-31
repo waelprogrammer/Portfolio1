@@ -3,14 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, X, ExternalLink } from 'lucide-react';
 import { projects } from '../config/siteAssets';
+import { useLanguage } from '../context/LanguageContext';
 
-const filters = ['All', 'Video Ads', 'Social Media', 'Photography', 'Websites'];
+const enFilters = ['All', 'Video Ads', 'Social Media', 'Photography', 'Websites'];
 
 const typeEmoji = { video: '🎬', image: '🎨', photo: '📸', web: '💻' };
 const typeLabel = { video: 'VIDEO', image: 'DESIGN', photo: 'PHOTO', web: 'WEB' };
 const typeColor = { video: '#ff6ec7', image: '#e91e8c', photo: '#ffb6c1', web: '#c084fc' };
 
 function ProjectModal({ project, onClose }) {
+  const { t } = useLanguage();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -83,7 +85,7 @@ function ProjectModal({ project, onClose }) {
             whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
             className="btn-primary" style={{ fontSize: '0.85rem', padding: '10px 22px' }}
           >
-            <ExternalLink size={14} /> View Project
+            <ExternalLink size={14} /> {t.portfolio.viewProject}
           </motion.button>
         </div>
       </motion.div>
@@ -93,10 +95,11 @@ function ProjectModal({ project, onClose }) {
 
 export default function ProjectsPage() {
   const navigate = useNavigate();
-  const [activeFilter, setActiveFilter] = useState('All');
+  const { t } = useLanguage();
+  const [activeIdx, setActiveIdx] = useState(0);
   const [selected, setSelected] = useState(null);
 
-  const filtered = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
+  const filtered = activeIdx === 0 ? projects : projects.filter(p => p.category === enFilters[activeIdx]);
 
   return (
     <div style={{ minHeight: '100vh', background: '#050508', paddingTop: '100px', paddingBottom: '80px' }}>
@@ -130,7 +133,7 @@ export default function ProjectsPage() {
           onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,110,199,0.4)'; e.currentTarget.style.color = '#ff6ec7'; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; }}
         >
-          <ArrowLeft size={15} /> Back to Home
+          <ArrowLeft size={15} /> {t.projects.back}
         </motion.button>
 
         {/* Header */}
@@ -141,7 +144,7 @@ export default function ProjectsPage() {
           style={{ marginBottom: '56px' }}
         >
           <span style={{ fontSize: '0.75rem', letterSpacing: '3px', textTransform: 'uppercase', color: '#ff6ec7', fontWeight: '600' }}>
-            All Projects
+            {t.projects.label}
           </span>
           <div className="section-divider" style={{ margin: '12px 0 0' }} />
           <h1 style={{
@@ -150,12 +153,12 @@ export default function ProjectsPage() {
             fontWeight: '700', lineHeight: '1.1',
             marginTop: '20px', marginBottom: '16px',
           }}>
-            <span className="text-gradient-white">Every Project,</span>
+            <span className="text-gradient-white">{t.projects.title1}</span>
             <br />
-            <span className="text-gradient">Every Story</span>
+            <span className="text-gradient">{t.projects.title2}</span>
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '1rem', maxWidth: '480px', lineHeight: '1.8' }}>
-            A full view of the work — videos, designs, photography, and websites.
+            {t.projects.desc}
           </p>
         </motion.div>
 
@@ -166,28 +169,28 @@ export default function ProjectsPage() {
           transition={{ delay: 0.2 }}
           style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '48px' }}
         >
-          {filters.map(filter => (
+          {t.portfolio.filters.map((filter, idx) => (
             <motion.button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
+              key={idx}
+              onClick={() => setActiveIdx(idx)}
               whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
               style={{
                 padding: '9px 22px', borderRadius: '30px',
                 fontSize: '0.85rem', fontWeight: '500', cursor: 'none',
-                border: activeFilter === filter ? '1.5px solid #ff6ec7' : '1.5px solid rgba(255,255,255,0.1)',
-                background: activeFilter === filter ? 'linear-gradient(135deg, #ff6ec7, #e91e8c)' : 'rgba(255,255,255,0.04)',
-                color: activeFilter === filter ? '#fff' : 'rgba(255,255,255,0.6)',
-                boxShadow: activeFilter === filter ? '0 4px 20px rgba(255,110,199,0.35)' : 'none',
+                border: activeIdx === idx ? '1.5px solid #ff6ec7' : '1.5px solid rgba(255,255,255,0.1)',
+                background: activeIdx === idx ? 'linear-gradient(135deg, #ff6ec7, #e91e8c)' : 'rgba(255,255,255,0.04)',
+                color: activeIdx === idx ? '#fff' : 'rgba(255,255,255,0.6)',
+                boxShadow: activeIdx === idx ? '0 4px 20px rgba(255,110,199,0.35)' : 'none',
                 transition: 'all 0.25s ease', backdropFilter: 'blur(10px)',
               }}
             >
               {filter}
               <span style={{
                 marginLeft: '8px', fontSize: '0.7rem', opacity: 0.75,
-                background: activeFilter === filter ? 'rgba(255,255,255,0.2)' : 'rgba(255,110,199,0.15)',
+                background: activeIdx === idx ? 'rgba(255,255,255,0.2)' : 'rgba(255,110,199,0.15)',
                 borderRadius: '10px', padding: '1px 7px',
               }}>
-                {filter === 'All' ? projects.length : projects.filter(p => p.category === filter).length}
+                {idx === 0 ? projects.length : projects.filter(p => p.category === enFilters[idx]).length}
               </span>
             </motion.button>
           ))}

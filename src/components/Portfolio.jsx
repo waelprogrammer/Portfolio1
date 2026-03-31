@@ -2,8 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { X, ExternalLink, Play } from 'lucide-react';
 import { projects } from '../config/siteAssets';
-
-const filters = ['All', 'Video Ads', 'Social Media', 'Photography', 'Websites'];
+import { useLanguage } from '../context/LanguageContext';
 
 const typeEmoji = { video: '🎬', image: '🎨', photo: '📸', web: '💻' };
 const typeLabel = { video: 'VIDEO', image: 'DESIGN', photo: 'PHOTO', web: 'WEB' };
@@ -12,6 +11,7 @@ const typeColor = {
 };
 
 function ProjectModal({ project, onClose }) {
+  const { t } = useLanguage();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -101,7 +101,7 @@ function ProjectModal({ project, onClose }) {
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="btn-primary" style={{ fontSize: '0.85rem', padding: '10px 22px' }}
             >
-              <ExternalLink size={14} /> View Project
+              <ExternalLink size={14} /> {t.portfolio.viewProject}
             </motion.button>
           </div>
         </div>
@@ -110,13 +110,16 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
+const enFilters = ['All', 'Video Ads', 'Social Media', 'Photography', 'Websites'];
+
 export default function Portfolio() {
-  const [activeFilter, setActiveFilter] = useState('All');
+  const { t } = useLanguage();
+  const [activeIdx, setActiveIdx] = useState(0);
   const [selectedProject, setSelectedProject] = useState(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
-  const filtered = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
+  const filtered = activeIdx === 0 ? projects : projects.filter(p => p.category === enFilters[activeIdx]);
 
   return (
     <section id="portfolio" ref={ref} style={{ padding: '120px 0', position: 'relative' }}>
@@ -136,12 +139,12 @@ export default function Portfolio() {
           style={{ textAlign: 'center', marginBottom: '60px' }}
         >
           <span style={{ fontSize: '0.75rem', letterSpacing: '3px', textTransform: 'uppercase', color: '#ff6ec7', fontWeight: '600' }}>
-            My Work
+            {t.portfolio.label}
           </span>
           <div className="section-divider" style={{ margin: '12px auto 0' }} />
           <h2 className="section-title" style={{ marginTop: '20px' }}>
-            <span className="text-gradient-white">My Best</span>{' '}
-            <span className="text-gradient">Work</span>
+            <span className="text-gradient-white">{t.portfolio.title1}</span>{' '}
+            <span className="text-gradient">{t.portfolio.title2}</span>
           </h2>
         </motion.div>
 
@@ -152,10 +155,10 @@ export default function Portfolio() {
           transition={{ delay: 0.2 }}
           style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '48px' }}
         >
-          {filters.map(filter => (
+          {t.portfolio.filters.map((filter, idx) => (
             <motion.button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
+              key={idx}
+              onClick={() => setActiveIdx(idx)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               style={{
@@ -164,14 +167,14 @@ export default function Portfolio() {
                 fontSize: '0.85rem',
                 fontWeight: '500',
                 cursor: 'none',
-                border: activeFilter === filter
+                border: activeIdx === idx
                   ? '1.5px solid #ff6ec7'
                   : '1.5px solid rgba(255,255,255,0.1)',
-                background: activeFilter === filter
+                background: activeIdx === idx
                   ? 'linear-gradient(135deg, #ff6ec7, #e91e8c)'
                   : 'rgba(255,255,255,0.04)',
-                color: activeFilter === filter ? '#fff' : 'rgba(255,255,255,0.6)',
-                boxShadow: activeFilter === filter ? '0 4px 20px rgba(255,110,199,0.35)' : 'none',
+                color: activeIdx === idx ? '#fff' : 'rgba(255,255,255,0.6)',
+                boxShadow: activeIdx === idx ? '0 4px 20px rgba(255,110,199,0.35)' : 'none',
                 transition: 'all 0.25s ease',
                 backdropFilter: 'blur(10px)',
               }}
